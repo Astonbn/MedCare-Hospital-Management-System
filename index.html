@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-hospital"></i> MediCare HMS</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </li>
+                <li class="nav-item" data-page="patients">
+                    <i class="fas fa-user-injured"></i> Patient Management
+                </li>
+                <li class="nav-item" data-page="staff">
+                    <i class="fas fa-user-md"></i> Staff Management
+                </li>
+                <li class="nav-item" data-page="appointments">
+                    <i class="fas fa-calendar-check"></i> Appointments
+                </li>
+                <li class="nav-item" data-page="billing">
+                    <i class="fas fa-file-invoice-dollar"></i> Billing & Invoicing
+                </li>
+                <li class="nav-item" data-page="inventory">
+                    <i class="fas fa-boxes"></i> Inventory
+                </li>
+                <li class="nav-item" data-page="medical-records">
+                    <i class="fas fa-file-medical"></i> Medical Records
+                </li>
+                <li class="nav-item" data-page="laboratory">
+                    <i class="fas fa-flask"></i> Laboratory
+                </li>
+                <li class="nav-item" data-page="pharmacy">
+                    <i class="fas fa-pills"></i> Pharmacy
+                </li>
+                <li class="nav-item" data-page="reports">
+                    <i class="fas fa-chart-bar"></i> Reports & Analytics
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/40" alt="User">
+                        <span>Dr. Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Page -->
+            <div class="page active" id="dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon patients">
+                            <i class="fas fa-user-injured"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>1,234</h3>
+                            <p>Total Patients</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon staff">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>89</h3>
+                            <p>Staff Members</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon appointments">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>45</h3>
+                            <p>Today's Appointments</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon revenue">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>K12,500</h3>
+                            <p>Today's Revenue</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-content">
+                    <div class="chart-container">
+                        <h3>Patient Admissions (Last 7 Days)</h3>
+                        <canvas id="admissionChart"></canvas>
+                    </div>
+                    <div class="recent-activities">
+                        <h3>Recent Activities</h3>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <i class="fas fa-user-plus"></i>
+                                <span>New patient registered: John Doe</span>
+                                <small>2 hours ago</small>
+                            </div>
+                            <div class="activity-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>Appointment scheduled with Dr. Smith</span>
+                                <small>4 hours ago</small>
+                            </div>
+                            <div class="activity-item">
+                                <i class="fas fa-file-invoice"></i>
+                                <span>Invoice generated for patient ID: 1234</span>
+                                <small>6 hours ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Management Page -->
+            <div class="page" id="patients">
+                <div class="page-header">
+                    <h2>Patient Management</h2>
+                    <button class="btn btn-primary" onclick="showModal('patientModal')">
+                        <i class="fas fa-plus"></i> Add New Patient
+                    </button>
+                </div>
+                
+                <div class="search-filter-bar">
+                    <input type="text" placeholder="Search patients..." class="search-input">
+                    <select class="filter-select">
+                        <option value="">All Status</option>
+                        <option value="admitted">Admitted</option>
+                        <option value="discharged">Discharged</option>
+                        <option value="outpatient">Outpatient</option>
+                    </select>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Contact</th>
+                                <th>Status</th>
+                                <th>Last Visit</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patientsTableBody">
+                            <tr>
+                                <td>P001</td>
+                                <td>John Phiri</td>
+                                <td>35</td>
+                                <td>+1-555-0123</td>
+                                <td><span class="status admitted">Admitted</span></td>
+                                <td>2024-01-15</td>
+                                <td>
+                                    <button class="btn-icon" onclick="viewPatient('P001')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="editPatient('P001')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Staff Management Page -->
+            <div class="page" id="staff">
+                <div class="page-header">
+                    <h2>Staff Management</h2>
+                    <button class="btn btn-primary" onclick="showModal('staffModal')">
+                        <i class="fas fa-plus"></i> Add New Staff
+                    </button>
+                </div>
+
+                <div class="staff-categories">
+                    <div class="category-card">
+                        <h3>Doctors</h3>
+                        <span class="count">25</span>
+                    </div>
+                    <div class="category-card">
+                        <h3>Nurses</h3>
+                        <span class="count">45</span>
+                    </div>
+                    <div class="category-card">
+                        <h3>Admin Staff</h3>
+                        <span class="count">19</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Staff ID</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Department</th>
+                                <th>Contact</th>
+                                <th>Schedule</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffTableBody">
+                            <tr>
+                                <td>S001</td>
+                                <td>Dr. Sarah Tembo</td>
+                                <td>Doctor</td>
+                                <td>Cardiology</td>
+                                <td>+1-555-0124</td>
+                                <td>9 AM - 5 PM</td>
+                                <td>
+                                    <button class="btn-icon" onclick="viewStaff('S001')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="editStaff('S001')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Appointments Page -->
+            <div class="page" id="appointments">
+                <div class="page-header">
+                    <h2>Appointment Scheduling</h2>
+                    <button class="btn btn-primary" onclick="showModal('appointmentModal')">
+                        <i class="fas fa-plus"></i> Schedule Appointment
+                    </button>
+                </div>
+
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="btn-nav" onclick="previousMonth()">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="currentMonth">January 2024</h3>
+                        <button class="btn-nav" onclick="nextMonth()">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Calendar will be generated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="appointments-list">
+                    <h3>Today's Appointments</h3>
+                    <div class="appointment-item">
+                        <div class="appointment-time">09:00 AM</div>
+                        <div class="appointment-details">
+                            <strong>John Phiri</strong>
+                            <span>Dr. Sarah Tembo - Cardiology</span>
+                        </div>
+                        <div class="appointment-status confirmed">Confirmed</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing & Invoicing Page -->
+            <div class="page" id="billing">
+                <div class="page-header">
+                    <h2>Billing & Invoicing</h2>
+                    <button class="btn btn-primary" onclick="showModal('invoiceModal')">
+                        <i class="fas fa-plus"></i> Create Invoice
+                    </button>
+                </div>
+
+                <div class="billing-stats">
+                    <div class="stat-card">
+                        <h3>K45,230</h3>
+                        <p>Total Revenue (This Month)</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>K12,450</h3>
+                        <p>Pending Payments</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>156</h3>
+                        <p>Invoices Generated</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Invoice #</th>
+                                <th>Patient</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="billingTableBody">
+                            <tr>
+                                <td>INV-001</td>
+                                <td>John Doe</td>
+                                <td>2024-01-15</td>
+                                <td>K250.00</td>
+                                <td><span class="status paid">Paid</span></td>
+                                <td>
+                                    <button class="btn-icon" onclick="viewInvoice('INV-001')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="printInvoice('INV-001')">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Inventory Management Page -->
+            <div class="page" id="inventory">
+                <div class="page-header">
+                    <h2>Inventory Management</h2>
+                    <button class="btn btn-primary" onclick="showModal('inventoryModal')">
+                        <i class="fas fa-plus"></i> Add Item
+                    </button>
+                </div>
+
+                <div class="inventory-categories">
+                    <div class="category-tab active" data-category="medicines">Medicines</div>
+                    <div class="category-tab" data-category="equipment">Equipment</div>
+                    <div class="category-tab" data-category="supplies">Supplies</div>
+                </div>
+
+                <div class="inventory-alerts">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        5 items are running low on stock
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Item Code</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Stock</th>
+                                <th>Unit Price</th>
+                                <th>Expiry Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            <tr>
+                                <td>MED001</td>
+                                <td>Paracetamol</td>
+                                <td>Medicine</td>
+                                <td>500</td>
+                                <td>$0.50</td>
+                                <td>2025-06-15</td>
+                                <td><span class="status in-stock">In Stock</span></td>
+                                <td>
+                                    <button class="btn-icon" onclick="editInventory('MED001')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Medical Records Page -->
+            <div class="page" id="medical-records">
+                <div class="page-header">
+                    <h2>Medical Records (EHR)</h2>
+                    <button class="btn btn-primary" onclick="showModal('recordModal')">
+                        <i class="fas fa-plus"></i> New Record
+                    </button>
+                </div>
+
+                <div class="search-patient">
+                    <input type="text" placeholder="Search patient by ID or name..." class="search-input">
+                    <button class="btn btn-secondary">Search</button>
+                </div>
+
+                <div class="medical-record-container">
+                    <div class="patient-info-card">
+                        <h3>Patient Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>Name:</label>
+                                <span>John Doe</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Age:</label>
+                                <span>35</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Blood Type:</label>
+                                <span>O+</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Allergies:</label>
+                                <span>Penicillin</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="medical-history">
+                        <h3>Medical History</h3>
+                        <div class="history-timeline">
+                            <div class="history-item">
+                                <div class="history-date">2024-01-15</div>
+                                <div class="history-content">
+                                    <strong>Routine Checkup</strong>
+                                    <p>Dr. Sarah Wilson - Blood pressure normal, recommended annual screening</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Laboratory Page -->
+            <div class="page" id="laboratory">
+                <div class="page-header">
+                    <h2>Laboratory Management</h2>
+                    <button class="btn btn-primary" onclick="showModal('labTestModal')">
+                        <i class="fas fa-plus"></i> Schedule Test
+                    </button>
+                </div>
+
+                <div class="lab-stats">
+                    <div class="stat-card">
+                        <h3>25</h3>
+                        <p>Tests Scheduled Today</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>18</h3>
+                        <p>Results Pending</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>42</h3>
+                        <p>Completed Tests</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Test ID</th>
+                                <th>Patient</th>
+                                <th>Test Type</th>
+                                <th>Scheduled Date</th>
+                                <th>Status</th>
+                                <th>Technician</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="labTableBody">
+                            <tr>
+                                <td>LAB001</td>
+                                <td>John Doe</td>
+                                <td>Blood Test</td>
+                                <td>2024-01-16</td>
+                                <td><span class="status pending">Pending</span></td>
+                                <td>Lab Tech 1</td>
+                                <td>
+                                    <button class="btn-icon" onclick="viewLabResult('LAB001')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="updateLabResult('LAB001')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pharmacy Page -->
+            <div class="page" id="pharmacy">
+                <div class="page-header">
+                    <h2>Pharmacy Management</h2>
+                    <button class="btn btn-primary" onclick="showModal('prescriptionModal')">
+                        <i class="fas fa-plus"></i> New Prescription
+                    </button>
+                </div>
+
+                <div class="pharmacy-sections">
+                    <div class="section-card">
+                        <h3>Prescriptions</h3>
+                        <div class="prescription-list">
+                            <div class="prescription-item">
+                                <div class="prescription-header">
+                                    <strong>RX001 - John Doe</strong>
+                                    <span class="status ready">Ready</span>
+                                </div>
+                                <div class="prescription-details">
+                                    <p>Prescribed by: Dr. Sarah Wilson</p>
+                                    <p>Medications: Paracetamol 500mg, Amoxicillin 250mg</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <h3>Stock Management</h3>
+                        <div class="stock-alerts">
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-circle"></i>
+                                Insulin stock critically low (5 units remaining)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports & Analytics Page -->
+            <div class="page" id="reports">
+                <div class="page-header">
+                    <h2>Reports & Analytics</h2>
+                    <button class="btn btn-primary" onclick="generateReport()">
+                        <i class="fas fa-file-export"></i> Generate Report
+                    </button>
+                </div>
+
+                <div class="report-categories">
+                    <div class="report-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Financial Reports</h3>
+                        <p>Revenue, expenses, and profit analysis</p>
+                        <button class="btn btn-outline">View Reports</button>
+                    </div>
+                    <div class="report-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Patient Reports</h3>
+                        <p>Patient demographics and statistics</p>
+                        <button class="btn btn-outline">View Reports</button>
+                    </div>
+                    <div class="report-card">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h3>Operational Reports</h3>
+                        <p>Staff performance and resource utilization</p>
+                        <button class="btn btn-outline">View Reports</button>
+                    </div>
+                    <div class="report-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Compliance Reports</h3>
+                        <p>Government and regulatory compliance</p>
+                        <button class="btn btn-outline">View Reports</button>
+                    </div>
+                </div>
+
+                <div class="analytics-dashboard">
+                    <div class="chart-container">
+                        <h3>Monthly Revenue Trend</h3>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Patient Distribution by Department</h3>
+                        <canvas id="departmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="patientModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Patient</h3>
+                <button class="close-modal" onclick="hideModal('patientModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="patientForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="patientName">Full Name</label>
+                            <input type="text" id="patientName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientAge">Age</label>
+                            <input type="number" id="patientAge" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientGender">Gender</label>
+                            <select id="patientGender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientContact">Contact Number</label>
+                            <input type="tel" id="patientContact" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="patientAddress">Address</label>
+                            <textarea id="patientAddress" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientBloodType">Blood Type</label>
+                            <select id="patientBloodType">
+                                <option value="">Select Blood Type</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="emergencyContact">Emergency Contact</label>
+                            <input type="tel" id="emergencyContact">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="hideModal('patientModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Patient</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
